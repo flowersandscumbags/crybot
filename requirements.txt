@@ -3,3 +3,4 @@ pandas
 finnhub-python
 python-dotenv
 schedule
+pybind11
