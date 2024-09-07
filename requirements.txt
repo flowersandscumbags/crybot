@@ -1,0 +1,5 @@
+backtrader
+pandas
+finnhub-python
+python-dotenv
+schedule
