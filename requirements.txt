@@ -4,3 +4,4 @@ finnhub-python
 python-dotenv
 schedule
 pybind11
+websocket-client
