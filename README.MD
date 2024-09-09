@@ -44,3 +44,4 @@ CSV_PATH='C:\\downloads\\backtest\\trades.csv'
    
 ## Run 
    $ Python crybot.py
+   $ Python crybot-back.py ##now uses yahoo for backtesting

@@ -9,6 +9,7 @@ import time
 import websocket
 import json
 from pathlib import Path
+import threading
 
 # Load environment variables
 load_dotenv()
@@ -83,7 +84,12 @@ def on_error(ws, error):
     print(f"WebSocket error: {error}")
 
 def on_close(ws, close_status_code, close_msg):
-    print("WebSocket connection closed")
+    print("WebSocket connection closed. Attempting to reconnect...")
+
+    # Reconnect logic
+    reconnect_delay = 5  # Delay in seconds before reconnecting
+    time.sleep(reconnect_delay)
+    start_websocket()
 
 def on_open(ws):
     print("WebSocket connection opened")
@@ -91,7 +97,7 @@ def on_open(ws):
     for symbol in SYMBOLS:
         ws.send(json.dumps({'type': 'subscribe', 'symbol': symbol}))
 
-# WebSocket Initialization
+# WebSocket Initialization with Reconnection Logic
 def start_websocket():
     websocket.enableTrace(True)
     ws = websocket.WebSocketApp(f"wss://ws.finnhub.io?token={API_KEY}",
@@ -101,6 +107,7 @@ def start_websocket():
     ws.on_open = on_open
     ws.run_forever()
 
+# Running the bot
 if __name__ == '__main__':
     if MODE == 'LIVE':
         start_websocket()  # Start WebSocket for live trading
